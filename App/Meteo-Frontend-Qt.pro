@@ -4,7 +4,8 @@ QT += qml quick core network
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    yrno.cpp
+    yrno.cpp \
+    forecastdatamodel.cpp
 
 RESOURCES += qml.qrc \
     resources.qrc
@@ -16,4 +17,5 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    yrno.h
+    yrno.h \
+    forecastdatamodel.h
