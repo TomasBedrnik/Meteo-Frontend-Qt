@@ -41,9 +41,6 @@ Window {
                     verticalAlignment: Text.AlignVCenter
                     text: time
                 }
-//                WeatherIcon{
-//                id: cloudImageId
-//                }
                 WeatherIcon{
                     id:cloudImageId
                     anchors.left: t.right
@@ -51,62 +48,10 @@ Window {
                     pictureText: cloudText
                 }
 
-//                Image {
-//                    id:cloudImageId
-//                    anchors.left: t.right
-//                    anchors.verticalCenter: parent.verticalCenter
-//                    width:parent.height-5
-//                    height:parent.height-5
-//                    source: "/images/clouds/"+cloudImage+".png"
-//                    Rectangle {
-//                        height:parent.height
-//                        width:toolTipCloudText.contentWidth+10
-//                        anchors.left: parent.horizontalCenter
-//                        anchors.bottom: parent.verticalCenter
-//                        color:"#66FFFFFF"
-//                        Text {
-//                            id: toolTipCloudText
-//                            height:parent.height
-//                            width:parent.width
-//                            horizontalAlignment: Text.AlignHCenter
-//                            verticalAlignment: Text.AlignVCenter
-//                            text: cloudText
-//                        }
-//                        visible: mouseAreaCloud.containsMouse
-//                    }
-//                    MouseArea {
-//                        id: mouseAreaCloud
-//                        hoverEnabled: true
-//                        anchors.fill: parent
-//                    }
-//                }
-                Image {
+                WeatherIcon{
                     anchors.left: cloudImageId.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    width:parent.height-5
-                    height:parent.height-5
-                    source: "/images/wind/"+windImage+".png"
-                    Rectangle {
-                        height:parent.height
-                        width:toolTipWindText.contentWidth+10
-                        anchors.left: parent.horizontalCenter
-                        anchors.bottom: parent.verticalCenter
-                        color:"#66FFFFFF"
-                        Text {
-                            id: toolTipWindText
-                            height:parent.height
-                            width:parent.width
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: windText
-                        }
-                        visible: mouseAreaWind.containsMouse
-                    }
-                    MouseArea {
-                        id: mouseAreaWind
-                        hoverEnabled: true
-                        anchors.fill: parent
-                    }
+                    pictureFile: windImage
+                    pictureText: windText
                 }
             }
         }
