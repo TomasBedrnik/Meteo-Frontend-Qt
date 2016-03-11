@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>WeatherIcon.qml</file>
+        <file>components/WeatherIcon.qml</file>
     </qresource>
 </RCC>
