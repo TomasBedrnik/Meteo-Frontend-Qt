@@ -110,9 +110,9 @@ void YrNo::finishedCity( QNetworkReply * reply)
 
 
                                 QString time = f.from.toString("d.M. H:mm")+"–"+f.to.toString("H:mm");
-                                QString cloudImage = QString::number(f.symbolNum);
+                                QString cloudImage = "/images/clouds/"+QString::number(f.symbolNum)+".png";
                                 QString cloudText = f.symbolName;
-                                QString windImage = QString().sprintf("%04d",(int)(f.windSpeed*10/25)*25)+"."+QString().sprintf("%03d",(int)(f.windDir/5)*5);
+                                QString windImage = "/images/wind/"+QString().sprintf("%04d",(int)(f.windSpeed*10/25)*25)+"."+QString().sprintf("%03d",(int)(f.windDir/5)*5)+".png";;
                                 QString windText = f.windSpeedName+" "+f.windDirName;
 
                                 model->addForecast(ForecastItem(time,cloudImage,cloudText,windImage,windText));

@@ -8,7 +8,7 @@ Image {
     anchors.verticalCenter: parent.verticalCenter
     width:parent.height-5
     height:parent.height-5
-    source: "/images/clouds/"+pictureFile+".png"
+    source: pictureFile
     Rectangle {
         height:parent.height
         width:toolTipText.contentWidth+10
