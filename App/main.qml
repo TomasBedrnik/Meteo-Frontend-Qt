@@ -22,40 +22,78 @@ Window {
         anchors.margins: borderSize
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        TableView {
-            id: myTable
+        clip: true
+        ListView {
+            width: parent.width;
             model: myModel
-            headerVisible: false
-            width: parent.width
             height: parent.height
-            backgroundVisible: false
-            alternatingRowColors: false
-            style: TableViewStyle{
-                backgroundColor: "transparent"
-                alternateBackgroundColor: "transparent"
-                textColor: "black"
-                frame: Rectangle{
-                    color: "transparent"
-                    border{
-                        color: "red"
-                        width:0
+            delegate:
+                Rectangle {
+                width:parent.width
+                height:parent.width/8
+                color: "transparent"
+                Text {
+                    id: t;
+                    height:parent.height
+                    verticalAlignment: Text.AlignVCenter
+                    text: time
+                }
+                Image {
+                    id:cloudImageId
+                    anchors.left: t.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    width:parent.height-5
+                    height:parent.height-5
+                    source: "/images/clouds/"+cloudImage+".png"
+                    Rectangle {
+                        height:parent.height
+                        width:toolTipCloudText.contentWidth+10
+                        anchors.left: parent.horizontalCenter
+                        anchors.bottom: parent.verticalCenter
+                        color:"#66FFFFFF"
+                        Text {
+                            id: toolTipCloudText
+                            height:parent.height
+                            width:parent.width
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: cloudText
+                        }
+                        visible: mouseAreaCloud.containsMouse
+                    }
+                    MouseArea {
+                        id: mouseAreaCloud
+                        hoverEnabled: true
+                        anchors.fill: parent
                     }
                 }
-            }
-            TableViewColumn {
-                role: "type"
-                title: "Type"
-                width:myTable.width/2
-            }
-            TableViewColumn {
-                role: "size"
-                title: "Size"
-                width:myTable.width/4
-                delegate:
-                    Image {
-                    fillMode: Image.PreserveAspectFit
-                    source: styleData.value === "" ? "/images/1.png" : "/images/"+styleData.value+".png"
-                    //source: "/symbols/images/"+styleData.value+".png"
+                Image {
+                    anchors.left: cloudImageId.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    width:parent.height-5
+                    height:parent.height-5
+                    source: "/images/wind/"+windImage+".png"
+                    Rectangle {
+                        height:parent.height
+                        width:toolTipWindText.contentWidth+10
+                        anchors.left: parent.horizontalCenter
+                        anchors.bottom: parent.verticalCenter
+                        color:"#66FFFFFF"
+                        Text {
+                            id: toolTipWindText
+                            height:parent.height
+                            width:parent.width
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: windText
+                        }
+                        visible: mouseAreaWind.containsMouse
+                    }
+                    MouseArea {
+                        id: mouseAreaWind
+                        hoverEnabled: true
+                        anchors.fill: parent
+                    }
                 }
             }
         }
@@ -70,20 +108,4 @@ Window {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
     }
-    //    MouseArea {
-    //        anchors.fill: parent
-    //        onClicked: {
-    //            Qt.quit();
-    //        }
-    //    }
-
-    //    ListModel {
-    //        id: myModel
-    //        ListElement {
-    //            title: "item one"
-    //        }
-    //        ListElement {
-    //            title: "item two"
-    //        }
-    //    }
 }

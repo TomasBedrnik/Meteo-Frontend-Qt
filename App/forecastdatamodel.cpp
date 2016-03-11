@@ -1,52 +1,75 @@
 #include "forecastdatamodel.h"
 
-ForecastItem::ForecastItem(const QString &type, const QString &size)
-    : m_type(type), m_size(size)
+ForecastItem::ForecastItem(const QString &time, const QString &cloudImage, const QString &cloudText, const QString &windImage, const QString &windText)
+    : m_time(time), m_cloudImage(cloudImage), m_cloudText(cloudText),m_windImage(windImage),m_windText(windText)
 {
 }
 
-QString ForecastItem::type() const
+QString ForecastItem::time() const
 {
-    return m_type;
+    return m_time;
 }
 
-QString ForecastItem::size() const
+QString ForecastItem::cloudImage() const
 {
-    return m_size;
+    return m_cloudImage;
 }
 
+QString ForecastItem::cloudText() const
+{
+    return m_cloudText;
+}
+
+QString ForecastItem::windImage() const
+{
+    return m_windImage;
+}
+
+QString ForecastItem::windText() const
+{
+    return m_windText;
+}
 ForecastModel::ForecastModel(QObject *parent)
     : QAbstractListModel(parent)
 {
 }
 
-void ForecastModel::addForecast(const ForecastItem &animal)
+void ForecastModel::addForecast(const ForecastItem &forecast)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_animals << animal;
+    m_forecasts << forecast;
     endInsertRows();
 }
 
 int ForecastModel::rowCount(const QModelIndex & parent) const {
     Q_UNUSED(parent);
-    return m_animals.count();
+    return m_forecasts.count();
 }
 
 QVariant ForecastModel::data(const QModelIndex & index, int role) const {
-    if (index.row() < 0 || index.row() >= m_animals.count())
+    if (index.row() < 0 || index.row() >= m_forecasts.count())
         return QVariant();
 
-    const ForecastItem &animal = m_animals[index.row()];
-    if (role == TypeRole)
-        return animal.type();
-    else if (role == SizeRole)
-        return animal.size();
+    const ForecastItem &forecast = m_forecasts[index.row()];
+    if (role == TimeRole)
+        return forecast.time();
+    else if (role == CloudImageRole)
+        return forecast.cloudImage();
+    else if (role == CloudTextRole)
+        return forecast.cloudText();
+    else if (role == WindImageRole)
+        return forecast.windImage();
+    else if (role == WindTextRole)
+        return forecast.windText();
     return QVariant();
 }
 
 QHash<int, QByteArray> ForecastModel::roleNames() const {
     QHash<int, QByteArray> roles;
-    roles[TypeRole] = "type";
-    roles[SizeRole] = "size";
+    roles[TimeRole] = "time";
+    roles[CloudImageRole] = "cloudImage";
+    roles[CloudTextRole] = "cloudText";
+    roles[WindImageRole] = "windImage";
+    roles[WindTextRole] = "windText";
     return roles;
 }
