@@ -79,8 +79,6 @@ void YrNo::finishedCity( QNetworkReply * reply)
                                         f.symbolNumEx = attr.value("numberEx").toInt();
                                         f.symbolName = attr.value("name").toString();
                                         f.symbolVar = attr.value("var").toString();
-
-                                        model->addForecast(ForecastItem(f.symbolName, QString::number(f.symbolNum)));
                                     }
                                     else if (xmlReader->name() == "precipitation")
                                     {
@@ -109,6 +107,15 @@ void YrNo::finishedCity( QNetworkReply * reply)
                                     }
                                     xmlReader->skipCurrentElement();
                                 }
+
+
+                                QString time = f.from.toString("d.M. H:mm")+"–"+f.to.toString("H:mm");
+                                QString cloudImage = QString::number(f.symbolNum);
+                                QString cloudText = f.symbolName;
+                                QString windImage = QString().sprintf("%04d",(int)(f.windSpeed*10/25)*25)+"."+QString().sprintf("%03d",(int)(f.windDir/5)*5);
+                                QString windText = f.windSpeedName+" "+f.windDirName;
+
+                                model->addForecast(ForecastItem(time,cloudImage,cloudText,windImage,windText));
                                 forecast.push_back(f);
                             }
                         }
