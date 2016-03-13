@@ -9,7 +9,10 @@ Window {
     width: 640
     height: 480
 
+    property int textMargin: 10;
     property int borderSize: width/50
+    property int lineHeight: width/18
+    property int fontPixelSize: width/40
     visible: true
     Image {
         width: parent.width
@@ -25,7 +28,7 @@ Window {
         anchors.margins: borderSize
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        clip: true
+        //clip: true
         ListView {
             width: parent.width;
             model: myModel
@@ -33,26 +36,55 @@ Window {
             delegate:
                 Rectangle {
                 width:parent.width
-                height:parent.width/8
-                color: "transparent"
-                Text {
-                    id: t;
-                    height:parent.height
-                    verticalAlignment: Text.AlignVCenter
-                    text: time
-                }
-                WeatherIcon{
-                    id:cloudImageId
-                    anchors.left: t.right
-                    pictureFile: cloudImage
-                    pictureText: cloudText
+                height:lineHeight
+                color:"transparent"
+                Loader{
+                    source: section ? "components/WeatherSection.qml" : "components/WeatherLine.qml"
+                    width:parent.width
+                    height:lineHeight
                 }
 
-                WeatherIcon{
-                    anchors.left: cloudImageId.right
-                    pictureFile: windImage
-                    pictureText: windText
-                }
+//                Text {
+//                    id: timeID
+//                    height:parent.height
+//                    verticalAlignment: Text.AlignVCenter
+//                    text: time
+//                    font.pixelSize: fontPixelSize
+//                }
+//                Text {
+//                    id: tempId
+//                    anchors.right: precId.left
+//                    width:parent.height*1.5
+//                    height:parent.height
+//                    verticalAlignment: Text.AlignVCenter
+//                    horizontalAlignment: Text.AlignHCenter
+//                    text: temperature
+//                    font.bold: true
+//                    font.pixelSize: fontPixelSize
+//                }
+//                Text {
+//                    id: precId
+//                    anchors.right: cloudImageId.left
+//                    width:parent.height*2
+//                    height:parent.height
+//                    verticalAlignment: Text.AlignVCenter
+//                    horizontalAlignment: Text.AlignHCenter
+//                    text: precipitation
+//                    font.pixelSize: fontPixelSize
+//                }
+//                WeatherIcon{
+//                    id:cloudImageId
+//                    anchors.right: windImageId.left
+//                    pictureFile: cloudImage
+//                    pictureText: cloudText
+//                }
+
+//                WeatherIcon{
+//                    id: windImageId
+//                    anchors.right: parent.right
+//                    pictureFile: windImage
+//                    pictureText: windText
+//                }
             }
         }
     }

@@ -29,6 +29,7 @@ void YrNo::GetForecast(ForecastModel *model)
 void YrNo::finishedCity( QNetworkReply * reply)
 {
     QString city;
+    QString lastDate = "";
     QList<ForecastData> forecast;
 //    QString country;
     xmlReader = new QXmlStreamReader(reply->readAll());
@@ -108,14 +109,21 @@ void YrNo::finishedCity( QNetworkReply * reply)
                                     xmlReader->skipCurrentElement();
                                 }
 
-
-                                QString time = f.from.toString("d.M. H:mm")+"–"+f.to.toString("H:mm");
+                                QString date = f.from.toString("d.M.");
+                                if(date != lastDate)
+                                {
+                                    lastDate = date;
+                                    model->addForecast(ForecastItem(date));
+                                }
+                                QString time = f.to.toString("H:mm");
                                 QString cloudImage = "/images/clouds/"+QString::number(f.symbolNum)+".png";
                                 QString cloudText = f.symbolName;
                                 QString windImage = "/images/wind/"+QString().sprintf("%04d",(int)(f.windSpeed*10/25)*25)+"."+QString().sprintf("%03d",(int)(f.windDir/5)*5)+".png";;
-                                QString windText = f.windSpeedName+" "+f.windDirName;
+                                QString windText = QString::number(f.windSpeed) + " m/s "+ f.windSpeedName+" "+f.windDirName;
+                                QString temperature = QString::number(f.temperature)+"°";
+                                QString precipation = QString::number(f.precipation)+" mm";
 
-                                model->addForecast(ForecastItem(time,cloudImage,cloudText,windImage,windText));
+                                model->addForecast(ForecastItem(time,cloudImage,cloudText,windImage,windText,precipation,temperature));
                                 forecast.push_back(f);
                             }
                         }
