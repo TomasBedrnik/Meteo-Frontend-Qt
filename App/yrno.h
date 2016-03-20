@@ -6,7 +6,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QXmlStreamReader>
-#include "forecastdatamodel.h"
+#include "apiinterface.h"
 
 struct ForecastData
 {
@@ -30,19 +30,14 @@ public:
     QString pressureUnit;
 };
 
-class YrNo : public QObject
+class YrNo : public ApiInterface
 {
     Q_OBJECT
 public:
     YrNo();
     void GetForecast(ForecastModel *model);
 private slots:
-    void finishedCity( QNetworkReply * reply);
-private:
-    QNetworkAccessManager *manager;
-    QNetworkReply *reply;
-    QXmlStreamReader *xmlReader;
-    ForecastModel *model;
+    void finishedSLOT(QNetworkReply * reply);
 };
 
 #endif // YRNO_H

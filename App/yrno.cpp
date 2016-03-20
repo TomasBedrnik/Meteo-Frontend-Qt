@@ -1,5 +1,4 @@
 #include "yrno.h"
-#include <QTemporaryFile>
 
 YrNo::YrNo()
 {
@@ -18,7 +17,7 @@ void YrNo::GetForecast(ForecastModel *model)
 
     manager = new QNetworkAccessManager(this); // Instance variable
     connect(manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(finishedCity(QNetworkReply *)));
+            this, SLOT(finishedSLOT(QNetworkReply *)));
 
     manager->get(request);
 
@@ -26,7 +25,7 @@ void YrNo::GetForecast(ForecastModel *model)
     //QUrl url("http://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10;lon=9.58;msl=70");
 
 }
-void YrNo::finishedCity( QNetworkReply * reply)
+void YrNo::finishedSLOT( QNetworkReply * reply)
 {
     QString city;
     QString lastDate = "";
@@ -118,7 +117,7 @@ void YrNo::finishedCity( QNetworkReply * reply)
                                 QString time = f.to.toString("H:mm");
                                 QString cloudImage = "/images/clouds/"+QString::number(f.symbolNum)+".png";
                                 QString cloudText = f.symbolName;
-                                QString windImage = "/images/wind/"+QString().sprintf("%04d",(int)(f.windSpeed*10/25)*25)+"."+QString().sprintf("%03d",(int)(f.windDir/5)*5)+".png";;
+                                QString windImage = "/images/wind/"+QString().sprintf("%04d",(int)(f.windSpeed*10/25)*25)+"."+QString().sprintf("%03d",(int)(f.windDir/5)*5)+".png";
                                 QString windText = QString::number(f.windSpeed) + " m/s "+ f.windSpeedName+" "+f.windDirName;
                                 QString temperature = QString::number(f.temperature)+"°";
                                 QString precipation = QString::number(f.precipation)+" mm";

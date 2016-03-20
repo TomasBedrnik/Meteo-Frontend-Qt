@@ -12,7 +12,9 @@ Window {
     property int textMargin: 10;
     property int borderSize: width/50
     property int lineHeight: width/18
+    property int sectionLineHeight: width/25
     property int fontPixelSize: width/40
+    property int buttonHeight: height/20
     visible: true
     Image {
         width: parent.width
@@ -20,82 +22,77 @@ Window {
         fillMode: Image.PreserveAspectCrop
         source: "/images/background.jpg"
     }
+
     Rectangle {
-        id: leftForecast
-        width: parent.width/2-(borderSize*2)
-        height: parent.height-(borderSize*2)
-        color: "#44FFFFFF"
-        anchors.margins: borderSize
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        //clip: true
-        ListView {
-            width: parent.width;
-            model: myModel
-            height: parent.height
-            delegate:
-                Rectangle {
-                width:parent.width
-                height:lineHeight
-                color:"transparent"
-                Loader{
-                    source: section ? "components/WeatherSection.qml" : "components/WeatherLine.qml"
-                    width:parent.width
-                    height:lineHeight
+        id: buttons
+        width: parent.width
+        height: buttonHeight
+        anchors.top: parent.top
+        color:"transparent";
+        ExclusiveGroup {
+            id: navButtons
+        }
+        Button{
+            id: forecastButton;
+            width: parent.width/2
+            height: buttonHeight
+            anchors.left: parent.left
+            text: "Forecast"
+            checkable:true
+            checked:true
+            exclusiveGroup: navButtons
+            style:ButtonStyle{
+                background:Rectangle{
+                    color:control.checked ? "#4400FF00" : "#44FFFFFF"
                 }
-
-//                Text {
-//                    id: timeID
-//                    height:parent.height
-//                    verticalAlignment: Text.AlignVCenter
-//                    text: time
-//                    font.pixelSize: fontPixelSize
-//                }
-//                Text {
-//                    id: tempId
-//                    anchors.right: precId.left
-//                    width:parent.height*1.5
-//                    height:parent.height
-//                    verticalAlignment: Text.AlignVCenter
-//                    horizontalAlignment: Text.AlignHCenter
-//                    text: temperature
-//                    font.bold: true
-//                    font.pixelSize: fontPixelSize
-//                }
-//                Text {
-//                    id: precId
-//                    anchors.right: cloudImageId.left
-//                    width:parent.height*2
-//                    height:parent.height
-//                    verticalAlignment: Text.AlignVCenter
-//                    horizontalAlignment: Text.AlignHCenter
-//                    text: precipitation
-//                    font.pixelSize: fontPixelSize
-//                }
-//                WeatherIcon{
-//                    id:cloudImageId
-//                    anchors.right: windImageId.left
-//                    pictureFile: cloudImage
-//                    pictureText: cloudText
-//                }
-
-//                WeatherIcon{
-//                    id: windImageId
-//                    anchors.right: parent.right
-//                    pictureFile: windImage
-//                    pictureText: windText
-//                }
+                label: Text{
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    color: "black"
+                    font.bold: true
+                    font.pixelSize: fontPixelSize
+                    text: control.text
+                }
             }
         }
-    }
+        Button{
+            id: graphButton;
+            width: parent.width/2
+            height: buttonHeight
+            anchors.right: parent.right
+            text: "Graph"
+            checkable:true
+            exclusiveGroup: navButtons
+            style:ButtonStyle{
+                background:Rectangle{
+                    color:control.checked ? "#4400FF00" : "#44FFFFFF"
+                }
+                label: Text{
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    color: "black"
+                    font.bold: true
+                    font.pixelSize: fontPixelSize
+                    text: control.text
+                }
+            }
+        }
 
-    Rectangle {
-        id: rightForecast
-        width: parent.width/2-(borderSize*2)
-        height: parent.height-(borderSize*2)
-        color: "#44FFFFFF"
-        anchors.margins: borderSize
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
     }
+    Rectangle {
+        id: space
+        width: parent.width
+        height: parent.height-(buttonHeight)
+        anchors.bottom: parent.bottom
+        color:"transparent"
+
+        Loader{
+            anchors.fill: parent
+            source: navButtons.current == forecastButton ? "components/WeatherForecast.qml" : "components/WeatherGraph.qml"
+        }
+    }
+    //    MouseArea {
+    //        anchors.fill: parent
+    //        onClicked: Qt.quit();
+    //        }
 }

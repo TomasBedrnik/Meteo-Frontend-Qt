@@ -50,6 +50,7 @@ public:
     ForecastModel(QObject *parent = 0);
 
     void addForecast(const ForecastItem &forecast);
+    void removeEndSections();
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant get() const;
