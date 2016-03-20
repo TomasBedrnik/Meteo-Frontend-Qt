@@ -60,6 +60,19 @@ void ForecastModel::addForecast(const ForecastItem &forecast)
     endInsertRows();
 }
 
+void ForecastModel::removeEndSections()
+{
+    while(true)
+    {
+        if(m_forecasts.count() == 0)
+            break;
+        if(m_forecasts.at(m_forecasts.count()-1).section() == true)
+            m_forecasts.pop_back();
+        else
+            break;
+    }
+}
+
 int ForecastModel::rowCount(const QModelIndex & parent) const {
     Q_UNUSED(parent);
     return m_forecasts.count();

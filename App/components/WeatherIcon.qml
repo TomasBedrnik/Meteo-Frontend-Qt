@@ -11,23 +11,23 @@ Image {
     source: pictureFile
     Rectangle {
         height:parent.height
-        width:toolTipText.contentWidth+10
+//        width:toolTipText.contentWidth+10
         anchors.left: parent.horizontalCenter
         anchors.bottom: parent.verticalCenter
         color:"#66FFFFFF"
-        Text {
-            id: toolTipText
-            height:parent.height
-            width:parent.width
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            text: pictureText
-        }
-        visible: mouseArea.containsMouse
+//        Text {
+//            id: toolTipText
+//            height:parent.height
+//            width:parent.width
+//            horizontalAlignment: Text.AlignHCenter
+//            verticalAlignment: Text.AlignVCenter
+//            text: pictureText
+//        }
+//        visible: mouseArea.containsMouse
     }
-    MouseArea {
-        id: mouseArea
-        hoverEnabled: true
-        anchors.fill: parent
-    }
+//    MouseArea {
+//        id: mouseArea
+//        hoverEnabled: true
+//        anchors.fill: parent
+//    }
 }

@@ -5,7 +5,8 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     yrno.cpp \
-    forecastdatamodel.cpp
+    forecastdatamodel.cpp \
+    apimetnolocation.cpp
 
 RESOURCES += qml.qrc \
     resources.qrc
@@ -18,4 +19,6 @@ include(deployment.pri)
 
 HEADERS += \
     yrno.h \
-    forecastdatamodel.h
+    forecastdatamodel.h \
+    apimetnolocation.h \
+    apiinterface.h

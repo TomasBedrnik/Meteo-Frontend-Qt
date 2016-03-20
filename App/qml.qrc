@@ -4,5 +4,7 @@
         <file>components/WeatherIcon.qml</file>
         <file>components/WeatherLine.qml</file>
         <file>components/WeatherSection.qml</file>
+        <file>components/WeatherForecast.qml</file>
+        <file>components/WeatherGraph.qml</file>
     </qresource>
 </RCC>
