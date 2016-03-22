@@ -5,18 +5,37 @@ import QtQuick.Controls.Styles 1.4
 
 import "components/"
 
-Window {
-    width: 640
-    height: 480
 
+Window {
+    width: 1920
+    height: 1080
+
+    property date curDate: new Date()
     property int textMargin: 10;
     property int borderSize: width/50
     property int lineHeight: width/18
     property int sectionLineHeight: width/25
     property int fontPixelSize: width/40
     property int buttonHeight: height/20
+    property int backgroundImageIter: 0
+    Timer {
+         interval: 5000; running: true; repeat: true;
+         onTriggered:nextImage()
+     }
+
+    function nextImage() {
+        var image = "file://"+imagesPath+"/img"+backgroundImageIter+".jpg";
+
+        backgroundImageIter++;
+        if(backgroundImageIter >= nImages)
+            backgroundImageIter = 0;
+
+        backgroundImage.source = image;
+    }
+
     visible: true
     Image {
+        id:backgroundImage
         width: parent.width
         height: parent.height
         fillMode: Image.PreserveAspectCrop
