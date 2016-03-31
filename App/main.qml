@@ -7,8 +7,8 @@ import "components/"
 
 
 Window {
-    width: 1920
-    height: 1080
+    width: screenWidth
+    height: screenHeight
 
     property date curDate: new Date()
     property int textMargin: 10;
@@ -18,19 +18,41 @@ Window {
     property int fontPixelSize: width/40
     property int buttonHeight: height/20
     property int backgroundImageIter: 0
+    property int clockWidth: width/10
     Timer {
-         interval: 5000; running: true; repeat: true;
-         onTriggered:nextImage()
-     }
+        interval: 10000; running: true; repeat: true;
+        onTriggered:changeView()
+    }
+    Timer {
+        interval: 5000; running: true; repeat: true;
+        onTriggered:nextImage()
+    }
+    Timer {
+        interval: 1000; running: true; repeat: true;
+        onTriggered:clockTick()
+    }
 
+    function changeView() {
+        if(forecastButton.checked)
+            graphButton.checked = true;
+        else
+            forecastButton.checked = true;
+    }
+    function clockTick() {
+        var date = new Date;
+
+        clockText.text = ("0" + date.getHours()).slice(-2)+":"+("0" + date.getMinutes()).slice(-2)+":"+("0" + date.getSeconds()).slice(-2);
+    }
     function nextImage() {
-        var image = "file://"+imagesPath+"/img"+backgroundImageIter+".jpg";
+        if(nImages > 0)
+        {
+            var image = "file://"+imagesPath+"/images/img"+backgroundImageIter+".jpg";
+            backgroundImage.source = image;
+        }
 
         backgroundImageIter++;
         if(backgroundImageIter >= nImages)
             backgroundImageIter = 0;
-
-        backgroundImage.source = image;
     }
 
     visible: true
@@ -53,7 +75,7 @@ Window {
         }
         Button{
             id: forecastButton;
-            width: parent.width/2
+            width: parent.width/2-clockWidth/2
             height: buttonHeight
             anchors.left: parent.left
             text: "Forecast"
@@ -76,9 +98,9 @@ Window {
         }
         Button{
             id: graphButton;
-            width: parent.width/2
+            width: parent.width/2-clockWidth/2
             height: buttonHeight
-            anchors.right: parent.right
+            anchors.left: forecastButton.right
             text: "Graph"
             checkable:true
             exclusiveGroup: navButtons
@@ -96,7 +118,28 @@ Window {
                 }
             }
         }
-
+        Rectangle{
+            id: clock;
+            width: clockWidth
+            height: buttonHeight
+            anchors.right: parent.right
+            color: "transparent"
+            Text{
+                id:clockText
+                width: parent.width
+                height: parent.height
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                color: "black"
+                font.bold: true
+                font.pixelSize: fontPixelSize
+                text: "Clock"
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: Qt.quit();
+            }
+        }
     }
     Rectangle {
         id: space
@@ -110,8 +153,4 @@ Window {
             source: navButtons.current == forecastButton ? "components/WeatherForecast.qml" : "components/WeatherGraph.qml"
         }
     }
-    //    MouseArea {
-    //        anchors.fill: parent
-    //        onClicked: Qt.quit();
-    //        }
 }

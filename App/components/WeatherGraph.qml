@@ -12,6 +12,6 @@ Rectangle{
         fillMode: Image.PreserveAspectCrop
         sourceSize.width: parent.width
         sourceSize.height: parent.height
-        source: "file:"+applicationDirPath+"/../../Meteo-Backend/graph.svg"
+        source: "file://"+imagesPath+"/graph/graph1.svg"
     }
 }
