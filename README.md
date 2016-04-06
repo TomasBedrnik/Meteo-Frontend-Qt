@@ -8,5 +8,4 @@ Frontend for home made meteo station based on "Fruit" Pi and few cheap sensors u
 - historical data from sensors in graphs
 - Qt5 without X server
 - QML defined GUI
-- smooth run on Orange Pi One
-- auto wake up based on cheap motion sensor (probably will be transfered to Backend)
+- smooth run on Raspberry Pi, Orange Pi One and similar
