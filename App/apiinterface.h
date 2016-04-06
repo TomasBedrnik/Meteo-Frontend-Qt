@@ -11,7 +11,9 @@ class ApiInterface : public QObject
 {
     Q_OBJECT
 public:
-    virtual void GetForecast(ForecastModel *model) = 0;
+    virtual void getForecast(ForecastModel *model) = 0;
+public slots:
+    virtual void getForecastSLOT() = 0;
 protected slots:
     virtual void finishedSLOT( QNetworkReply * reply) = 0;
 protected:

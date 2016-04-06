@@ -5,9 +5,8 @@ ApiMetNoLocation::ApiMetNoLocation()
 {
 }
 
-void ApiMetNoLocation::GetForecast(ForecastModel *model)
+void ApiMetNoLocation::getForecastSLOT()
 {
-    this->model = model;
     float lat = 50.6019;
     float lon = 15.3355;
     float msl = 321;
@@ -23,13 +22,16 @@ void ApiMetNoLocation::GetForecast(ForecastModel *model)
     manager->get(request);
 
 }
+void ApiMetNoLocation::getForecast(ForecastModel *model)
+{
+    this->model = model;
+    getForecastSLOT();
+
+}
 void ApiMetNoLocation::finishedSLOT( QNetworkReply * reply)
 {
-
-    QString city;
     QString lastDate = "";
     QList<ForecastDataMet> forecast;
-    //    QString country;
     xmlReader = new QXmlStreamReader(reply->readAll());
     if (xmlReader->readNextStartElement() && xmlReader->name() == "weatherdata")
     {
@@ -49,7 +51,6 @@ void ApiMetNoLocation::finishedSLOT( QNetworkReply * reply)
 
                         while (xmlReader->readNextStartElement())
                         {
-                            QString test = xmlReader->name().toString();
                             if (xmlReader->name() == "location")
                             {
                                 while (xmlReader->readNextStartElement())
@@ -142,7 +143,6 @@ void ApiMetNoLocation::finishedSLOT( QNetworkReply * reply)
                                 {
                                     ForecastDataMet previous = forecast.at(forecast.size()-1);
                                     QString time = f.from.toString("H:mm")+"-"+f.to.toString("H:mm");
-                                    //QString time = f.to.toString("H:mm");
                                     QString cloudImage = "/images/clouds/"+QString::number(f.symbolNum)+".png";
                                     QString cloudText = f.symbolName;
                                     QString windImage = "/images/wind/"+QString().sprintf("%04d",(int)(previous.windSpeed*10/25)*25)+"."+QString().sprintf("%03d",(int)(previous.windDir/5)*5)+".png";
@@ -162,13 +162,6 @@ void ApiMetNoLocation::finishedSLOT( QNetworkReply * reply)
         }
     }
     model->removeEndSections();
-    // readNextStartElement() leaves the stream in
-    // an invalid state at the end. A single readNext()
-    // will advance us to EndDocument.
     if (xmlReader->tokenType() == QXmlStreamReader::Invalid)
         xmlReader->readNext();
-
-    if (xmlReader->hasError()) {
-
-    }
 }
