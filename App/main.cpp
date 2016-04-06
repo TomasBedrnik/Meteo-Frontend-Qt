@@ -3,6 +3,7 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include <QProcess>
+#include <QTimer>
 
 #include "yrno.h"
 #include "apimetnolocation.h"
@@ -15,36 +16,30 @@ int main(int argc, char *argv[])
     //PARAMETERS
     int screenWidth = 1366;
     int screenHeight = 788;
-    QString imagesPath = "/tmp/Meteo-Backend";
-
-// NOT WORKING
-//    QByteArray width;
-//    QByteArray height;
-//    width.setNum(screenWidth);
-//    height.setNum(screenHeight);
-//    qputenv("QT_QPA_EGLFS_PHYSICAL_WIDTH",width);
-//    qputenv("QT_QPA_EGLFS_PHYSICAL_HEIGHT",height);
+    QString imagesPath = "/mnt/zbytek/tmp/Meteo-Backend";
 
     QProcess p;
     QStringList params;
 
-    params << "./Meteo-Backend/preloadImages.py";
+    params << "../../Meteo-Backend/preloadImages.py";
     p.start("python", params);
     p.waitForFinished(20000);
 
     QString p_stdout = p.readAll();
     int nImages = p_stdout.toInt();
 
-
-
     ForecastModel modelLeft;
     ForecastModel modelRight;
 
-
     YrNo *no = new YrNo();
-    no->GetForecast(&modelLeft);
+    no->getForecast(&modelLeft);
     ApiMetNoLocation *metNo = new ApiMetNoLocation();
-    metNo->GetForecast(&modelRight);
+    metNo->getForecast(&modelRight);
+
+    QTimer *timer = new QTimer();
+    QObject::connect(timer, SIGNAL(timeout()), no, SLOT(getForecastSLOT()));
+    QObject::connect(timer, SIGNAL(timeout()), metNo, SLOT(getForecastSLOT()));
+    timer->start(1000*60*10);//10 min
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());

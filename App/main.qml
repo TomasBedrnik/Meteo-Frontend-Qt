@@ -20,11 +20,11 @@ Window {
     property int backgroundImageIter: 0
     property int clockWidth: width/10
     Timer {
-        interval: 10000; running: true; repeat: true;
+        interval: 30000; running: true; repeat: true;
         onTriggered:changeView()
     }
     Timer {
-        interval: 5000; running: true; repeat: true;
+        interval: 10000; running: true; repeat: true;
         onTriggered:nextImage()
     }
     Timer {

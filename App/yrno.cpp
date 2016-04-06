@@ -4,14 +4,8 @@ YrNo::YrNo()
 {
 }
 
-void YrNo::GetForecast(ForecastModel *model)
+void YrNo::getForecastSLOT()
 {
-    this->model = model;
-//    float lat = 50.6019;
-//    float lon = 15.3355;
-//    float msl = 321;
-//    QString url = QString("http://api.met.no/weatherapi/locationforecast/1.9/?lat=")+QString::number(lat)+";lon="+QString::number(lon)+";msl="+QString::number(msl);
-
     QNetworkRequest request;
     request.setUrl(QUrl("http://www.yr.no/place/Czech_Republic/Liberec/Semily/forecast.xml"));
 
@@ -20,17 +14,18 @@ void YrNo::GetForecast(ForecastModel *model)
             this, SLOT(finishedSLOT(QNetworkReply *)));
 
     manager->get(request);
-
-    //QUrl url("http://kauritree.tumblr.com/api/read/");
-    //QUrl url("http://api.met.no/weatherapi/locationforecast/1.9/?lat=60.10;lon=9.58;msl=70");
-
+}
+void YrNo::getForecast(ForecastModel *model)
+{
+    this->model = model;
+    getForecastSLOT();
 }
 void YrNo::finishedSLOT( QNetworkReply * reply)
 {
     QString city;
     QString lastDate = "";
     QList<ForecastData> forecast;
-//    QString country;
+
     xmlReader = new QXmlStreamReader(reply->readAll());
     if (xmlReader->readNextStartElement() && xmlReader->name() == "weatherdata")
     {
@@ -45,11 +40,6 @@ void YrNo::finishedSLOT( QNetworkReply * reply)
                         xmlReader->readNext();
                         city = xmlReader->text().toString();
                     }
-//                    else if (xmlReader->name() == "country")
-//                    {
-//                        xmlReader->readNext();
-//                        country = xmlReader->text().toString();
-//                    }
                     xmlReader->skipCurrentElement();
                 }
             }
@@ -136,13 +126,6 @@ void YrNo::finishedSLOT( QNetworkReply * reply)
         }
     }
 
-    // readNextStartElement() leaves the stream in
-    // an invalid state at the end. A single readNext()
-    // will advance us to EndDocument.
     if (xmlReader->tokenType() == QXmlStreamReader::Invalid)
         xmlReader->readNext();
-
-    if (xmlReader->hasError()) {
-
-    }
 }

@@ -35,7 +35,9 @@ class YrNo : public ApiInterface
     Q_OBJECT
 public:
     YrNo();
-    void GetForecast(ForecastModel *model);
+    void getForecast(ForecastModel *model);
+public slots:
+    void getForecastSLOT();
 private slots:
     void finishedSLOT(QNetworkReply * reply);
 };
