@@ -14,9 +14,9 @@ Rectangle{
     function nextRadar() {
         var nGraphs = 12;
         var d = new Date;
-        var dateAct = new Date(d.getTime() - (nGraphs - radarImageIter)*600000)
-        var date = new Date(d.getTime() + d.getTimezoneOffset()*60000 - (nGraphs - radarImageIter)*600000)
-        var minutes = Math.floor(date.getMinutes()/10-1)*10;
+        var dateAct = new Date(d.getTime() - (nGraphs - radarImageIter)*600000 - 600000)
+        var date = new Date(d.getTime() + d.getTimezoneOffset()*60000 - (nGraphs - radarImageIter)*600000 - 600000)
+        var minutes = Math.floor(date.getMinutes()/10)*10;
         radar.text = ("0" + dateAct.getHours()).slice(-2)+":"+("0" + minutes).slice(-2);
 
         radarImg.source = "file://"+imagesPath+"/radarImages/radar"+date.getFullYear()+("0" + (date.getMonth()+1)).slice(-2)+("0" + date.getDate()).slice(-2)+"."+("0" + date.getHours()).slice(-2)+("0" + minutes).slice(-2)+".png";
