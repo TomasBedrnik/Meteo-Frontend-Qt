@@ -35,6 +35,8 @@ Window {
     function changeView() {
         if(forecastButton.checked)
             graphButton.checked = true;
+        else if(graphButton.checked)
+            radarButton.checked = true;
         else
             forecastButton.checked = true;
     }
@@ -53,6 +55,20 @@ Window {
         backgroundImageIter++;
         if(backgroundImageIter >= nImages)
             backgroundImageIter = 0;
+    }
+
+    function getForecastType()
+    {
+        var source = "components/WeatherForecast.qml";
+        if(navButtons.current == graphButton)
+        {
+            source = "components/WeatherGraph.qml";
+        }
+        if(navButtons.current == radarButton)
+        {
+            source = "components/RadarForecast.qml";
+        }
+        return source
     }
 
     visible: true
@@ -75,7 +91,7 @@ Window {
         }
         Button{
             id: forecastButton;
-            width: parent.width/2-clockWidth/2
+            width: parent.width/3-clockWidth/3
             height: buttonHeight
             anchors.left: parent.left
             text: "Forecast"
@@ -98,10 +114,32 @@ Window {
         }
         Button{
             id: graphButton;
-            width: parent.width/2-clockWidth/2
+            width: parent.width/3-clockWidth/3
             height: buttonHeight
             anchors.left: forecastButton.right
             text: "Graph"
+            checkable:true
+            exclusiveGroup: navButtons
+            style:ButtonStyle{
+                background:Rectangle{
+                    color:control.checked ? "#4400FF00" : "#44FFFFFF"
+                }
+                label: Text{
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    color: "black"
+                    font.bold: true
+                    font.pixelSize: fontPixelSize
+                    text: control.text
+                }
+            }
+        }
+        Button{
+            id: radarButton;
+            width: parent.width/3-clockWidth/3
+            height: buttonHeight
+            anchors.left: graphButton.right
+            text: "Radar"
             checkable:true
             exclusiveGroup: navButtons
             style:ButtonStyle{
@@ -150,7 +188,10 @@ Window {
 
         Loader{
             anchors.fill: parent
-            source: navButtons.current == forecastButton ? "components/WeatherForecast.qml" : "components/WeatherGraph.qml"
+            //source: navButtons.current == forecastButton ? "components/WeatherForecast.qml" : "components/WeatherGraph.qml"
+            source: getForecastType();
+
         }
     }
 }
+

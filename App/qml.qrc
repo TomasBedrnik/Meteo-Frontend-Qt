@@ -6,5 +6,6 @@
         <file>components/WeatherSection.qml</file>
         <file>components/WeatherForecast.qml</file>
         <file>components/WeatherGraph.qml</file>
+        <file>components/RadarForecast.qml</file>
     </qresource>
 </RCC>
