@@ -35,6 +35,7 @@ class YrNo : public ApiInterface
     Q_OBJECT
 public:
     YrNo();
+    ~YrNo();
     void getForecast(ForecastModel *model);
 public slots:
     void getForecastSLOT();

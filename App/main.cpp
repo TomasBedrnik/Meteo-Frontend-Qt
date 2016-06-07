@@ -16,12 +16,14 @@ int main(int argc, char *argv[])
     //PARAMETERS
     int screenWidth = 1366;
     int screenHeight = 788;
-    QString imagesPath = "/mnt/zbytek/tmp/Meteo-Backend";
+    //QString imagesPath = "/mnt/zbytek/tmp/Meteo-Backend";
+    QString imagesPath = "/tmp/Meteo-Backend";
 
     QProcess p;
     QStringList params;
 
-    params << "../../Meteo-Backend/preloadImages.py";
+    //params << "../../Meteo-Backend/preloadImages.py";
+    params << "./Meteo-Backend/preloadImages.py";
     p.start("python", params);
     p.waitForFinished(20000);
 
@@ -51,5 +53,9 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("screenHeight", screenHeight);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
-    return app.exec();
+    bool ret = app.exec();
+    delete no;
+    delete metNo;
+    delete timer;
+    return ret;
 }

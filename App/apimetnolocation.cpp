@@ -3,6 +3,14 @@
 
 ApiMetNoLocation::ApiMetNoLocation()
 {
+    manager = NULL;
+    xmlReader = NULL;
+}
+
+ApiMetNoLocation::~ApiMetNoLocation()
+{
+    delete manager;
+    delete xmlReader;
 }
 
 void ApiMetNoLocation::getForecastSLOT()
@@ -15,12 +23,12 @@ void ApiMetNoLocation::getForecastSLOT()
     QNetworkRequest request;
     request.setUrl(QUrl(url));
 
+    delete manager;
     manager = new QNetworkAccessManager(this); // Instance variable
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(finishedSLOT(QNetworkReply *)));
 
     manager->get(request);
-
 }
 void ApiMetNoLocation::getForecast(ForecastModel *model)
 {
@@ -32,6 +40,7 @@ void ApiMetNoLocation::finishedSLOT( QNetworkReply * reply)
 {
     QString lastDate = "";
     QList<ForecastDataMet> forecast;
+    delete xmlReader;
     xmlReader = new QXmlStreamReader(reply->readAll());
     if (xmlReader->readNextStartElement() && xmlReader->name() == "weatherdata")
     {

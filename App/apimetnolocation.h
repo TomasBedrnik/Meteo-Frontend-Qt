@@ -45,6 +45,7 @@ class ApiMetNoLocation : public QObject
     Q_OBJECT
 public:
     ApiMetNoLocation();
+    ~ApiMetNoLocation();
     void getForecast(ForecastModel *model);
 public slots:
     void getForecastSLOT();
