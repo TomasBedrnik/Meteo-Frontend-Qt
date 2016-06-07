@@ -2,6 +2,14 @@
 
 YrNo::YrNo()
 {
+    manager = NULL;
+    xmlReader = NULL;
+}
+
+YrNo::~YrNo()
+{
+    delete manager;
+    delete xmlReader;
 }
 
 void YrNo::getForecastSLOT()
@@ -9,6 +17,7 @@ void YrNo::getForecastSLOT()
     QNetworkRequest request;
     request.setUrl(QUrl("http://www.yr.no/place/Czech_Republic/Liberec/Semily/forecast.xml"));
 
+    delete manager;
     manager = new QNetworkAccessManager(this); // Instance variable
     connect(manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(finishedSLOT(QNetworkReply *)));
@@ -26,6 +35,7 @@ void YrNo::finishedSLOT( QNetworkReply * reply)
     QString lastDate = "";
     QList<ForecastData> forecast;
 
+    delete xmlReader;
     xmlReader = new QXmlStreamReader(reply->readAll());
     if (xmlReader->readNextStartElement() && xmlReader->name() == "weatherdata")
     {
