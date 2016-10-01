@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick core network
+QT += qml quick core network svg xml
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -10,6 +10,11 @@ SOURCES += main.cpp \
 
 RESOURCES += qml.qrc \
     resources.qrc
+
+#LIBS += -L/usr/arm-linux-gnueabihf/usr/lib \
+#    -lpthread
+
+#INCLUDEPATH +=
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

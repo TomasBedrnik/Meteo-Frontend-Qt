@@ -12,6 +12,7 @@ Rectangle{
         fillMode: Image.PreserveAspectCrop
         sourceSize.width: parent.width
         sourceSize.height: parent.height
+        //source: "/images/graph-TEST.svg"
         source: "file://"+imagesPath+"/graph/graph1.svg"
     }
 }

@@ -5,6 +5,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QXmlStreamReader>
+#include <QDateTime>
 #include "apiinterface.h"
 
 struct ForecastDataMet
