@@ -9,6 +9,7 @@
 #include "apimetnolocation.h"
 #include "forecastdatamodel.h"
 
+
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -26,12 +27,14 @@ int main(int argc, char *argv[])
 
     //params << "../../Meteo-Backend/preloadImages.py";
     params << "./Meteo-Backend/preloadImages.py";
+
     params << " -first";
     p.start("python", params);
     p.waitForFinished(20000);
 
     QString p_stdout = p.readAll();
     int nImages = p_stdout.toInt();
+
     std::cout << p_stdout.toUtf8().constData() << std::endl;
     std::cout << "___" << std::endl;
     std::cout << nImages << std::endl;
